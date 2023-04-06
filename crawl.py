@@ -14,10 +14,18 @@ import seaborn as sns
 
 
 file = "./download_.csv"
-headers = {
-    "User-Agent":'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-    "cookie": 'HSID=A-WgUv8-9biHpTC0Y; SSID=A363Mn1UclGReFBuW; APISID=ZnR0fyqMe9r_PSeb/A2-xnXn9Z2f3SsfKZ; SAPISID=1-I-MyZZBPuGLZxO/A0LQr6sWArPmzDsjh; __Secure-1PAPISID=1-I-MyZZBPuGLZxO/A0LQr6sWArPmzDsjh; __Secure-3PAPISID=1-I-MyZZBPuGLZxO/A0LQr6sWArPmzDsjh; SEARCH_SAMESITE=CgQIhZcB; SID=RggL17J222nsOCEGuLmBCDERGbXwrGN95eLFuQUG8HNfkgsO607nyWZwOgrh2ceO_WvxhQ.; __Secure-1PSID=RggL17J222nsOCEGuLmBCDERGbXwrGN95eLFuQUG8HNfkgsOVVpkjEs97E1DZ5gQNjVa7A.; __Secure-3PSID=RggL17J222nsOCEGuLmBCDERGbXwrGN95eLFuQUG8HNfkgsOnmAZMGSaIMpE9lAJeCVLcA.; AEC=AakniGMaPYXlf5w5JwXm2lAD89Hrszit6T7zdFfDcLsIuWjaX-MAymd3FA; NID=511=mSB05gSijon-elCht7GtUollUTlk4iD8Gm1OWOytbsODBBsjeHc8xFNKs3ayDWXO9dFUxL_FAAnoTjouvXYfUU3v2Hfp9YlI1xSAfWfcpsACBp5VLWerdYEl8awUKayzpqSlbuOuk2V3Zx7y8pXJrSs3CFCyW7HcA7I-EzmQH5YS5rJg9WLDMFPFDeJEuYRteQg1NKQk-Gv90Di297fmOHoKZZlc9Z24MhePMuCFYuO5QFo_5wiOIG76bFVyn6Vf_qTl7YVW1fa917TIbI-z1K5dr7CaojncYgwJvFdd_gB7w5mbktZIrMyFOPVRHaqFLDb_Vy-A3TcLXEJOySoH3A; 1P_JAR=2022-12-21-03; SIDCC=AIKkIs0bWVqaRzha2iDrB_N5YBkFVKZJasFOk2OE5ov4r6hPtCrL6IE2DC9jaB2FdVrD9T8Ke6A; __Secure-1PSIDCC=AIKkIs31mKR3APQC9OzT508_PCkALkg0ZwwNdNMuBx-2x9q50eFsJYlQ4bem3s7z3yTLj0AN4unT; __Secure-3PSIDCC=AIKkIs2OdZtYR9tWCjAfq6uykZygR8-CvQ6rzqxyUGP_YeG0LLB9h3Uea0wLs24usTdK6_BryKc'
-}
+# headers = {
+#     "User-Agent":'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+#     "cookie": 'SID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoCQGasELrwFSyQCAgJkFeDEQ.; __Secure-1PSID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoCXhqVo1cW_oRy2e1ec5HkLQ.; __Secure-3PSID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoClesjnozJEzLWPlIGTMGQQA.; HSID=A5ZyVH--ZOEvWYKXS; SSID=AcWeaG4Fp7RL8PBXj; APISID=eDSX2RxHPHmyjeY_/AIxOdk7sJeZOgMhrW; SAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; __Secure-1PAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; __Secure-3PAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; SEARCH_SAMESITE=CgQI85cB; AEC=AUEFqZeqVY8bkdcK3aUeHC2AzCM3rE4zpT2SpSPdIvmNEKxffFuh_qrPOA; NID=511=DjFQmO_sQQOzFI4vGSCUlXPijFCcqN8OdVN5thtpYKx59CEp3WnvXuXcVAhOQ4x_0mCyfClzIs05N3FXZJRy_iev_3XNNLNMCq778dY3sABPpDnRS059PkrFoI-XDJ8p_xI9arUbSlX8_ZJPPa2WwB9Jfcmx6Sa08ZuRzbilJWK2TBHwwZFKxnDtffrWmVXiBgl9C62ZidD26kZi4kCB3guEtJZpSr4nmiXohItq182wa2kU1X3mc_AQX0AiYFkrYXPef3IB2MUQ7Zy-u9sA4O9vtg; 1P_JAR=2023-03-29-14; SIDCC=AFvIBn9QgQeU3ymEqjon-KqaE7wtZxuzUH17ejgms7tomjqEaGLBqZjZv5FATN5eiIKPBx-hZBI; __Secure-1PSIDCC=AFvIBn_rDVaa6gHVkp8L1Sjwol5A4lEog0cHayIEC6xJDZapkvZmzMzcFqzNpcV-wmqtmq-Me20; __Secure-3PSIDCC=AFvIBn8B92numYlijZf-C6-yU6uy-9KazzRN9KrE9ZtjGIej0HPt-eO4rbffyRHFhUZwC8PfvUY'
+# }
+
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', 
+           "cookie": 'SID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoCQGasELrwFSyQCAgJkFeDEQ.; __Secure-1PSID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoCXhqVo1cW_oRy2e1ec5HkLQ.; __Secure-3PSID=UwgL14SRVDopBAIWZbWjuT2X0M2Xv5AkJ92jtrAZgVZHZWoClesjnozJEzLWPlIGTMGQQA.; HSID=A5ZyVH--ZOEvWYKXS; SSID=AcWeaG4Fp7RL8PBXj; APISID=eDSX2RxHPHmyjeY_/AIxOdk7sJeZOgMhrW; SAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; __Secure-1PAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; __Secure-3PAPISID=5E8S0nlKexXu2Rdm/A2VX74ItukiG6dUDQ; SEARCH_SAMESITE=CgQI85cB; AEC=AUEFqZeqVY8bkdcK3aUeHC2AzCM3rE4zpT2SpSPdIvmNEKxffFuh_qrPOA; NID=511=DjFQmO_sQQOzFI4vGSCUlXPijFCcqN8OdVN5thtpYKx59CEp3WnvXuXcVAhOQ4x_0mCyfClzIs05N3FXZJRy_iev_3XNNLNMCq778dY3sABPpDnRS059PkrFoI-XDJ8p_xI9arUbSlX8_ZJPPa2WwB9Jfcmx6Sa08ZuRzbilJWK2TBHwwZFKxnDtffrWmVXiBgl9C62ZidD26kZi4kCB3guEtJZpSr4nmiXohItq182wa2kU1X3mc_AQX0AiYFkrYXPef3IB2MUQ7Zy-u9sA4O9vtg; 1P_JAR=2023-03-29-14; SIDCC=AFvIBn9QgQeU3ymEqjon-KqaE7wtZxuzUH17ejgms7tomjqEaGLBqZjZv5FATN5eiIKPBx-hZBI; __Secure-1PSIDCC=AFvIBn_rDVaa6gHVkp8L1Sjwol5A4lEog0cHayIEC6xJDZapkvZmzMzcFqzNpcV-wmqtmq-Me20; __Secure-3PSIDCC=AFvIBn8B92numYlijZf-C6-yU6uy-9KazzRN9KrE9ZtjGIej0HPt-eO4rbffyRHFhUZwC8PfvUY',
+           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+           'Accept-Language': 'en-US,en;q=0.5',
+           'Accept-Encoding': 'zh-CN,zh;q=0.9,en;q=0.8',
+           'referer': 'https://www.google.com/'
+           }
 
 def parallelMap(job, data):
     pool = ThreadPool()
@@ -28,13 +36,15 @@ def parallelMap(job, data):
 
 def getText(url):
     r = requests.get(url, headers=headers)
-    # r = requests.session().get(url)
+    # session = requests.Session()
+    # r = session.get(url, timeout=30, headers=headers)  
     return r.text
 
 def downloadPatentHtml(pub_num):
-    url = 'https://patents.google.com/patent/' + pub_num + '/en'
+    url = 'https://patents.google.com/patent/' + pub_num + '/en\?oq\=' + pub_num
     text = getText(url)
     write2txt(text, "txt/" + pub_num + ".txt")
+    print('download of ' + pub_num + ' end.')
     return text
 
 def parseHtml(html):
@@ -80,20 +90,42 @@ def parseClassifications(patent):
     print("process " + patent + " done!")
     return (patent, res)
 
-def loadClsDic():
+# ClsMap.npy 存储的是专利号到CPC号的映射
+def loadClsMap():
     cls_map = np.load('ClsMap.npy', allow_pickle=True).flat[0] # .flat[0] make sure it's dict
     return cls_map
 
-def buildClsDic():
-    download_set = set(listPatents('txt'))
+# 对CPC分类号提取、去重
+def distinctClsMap(cls_map):
+    # 对CPC分类号提取、去重
+    for key, value in cls_map.items():
+        cpc_set = set()
+        for cpcs in value:
+            # 提取根据'/'拆分后的cpc分类号
+            cpc_split = None
+            for cpc in cpcs:
+                if '/' in cpc:
+                    cpc_split = cpc.split('/')[0]
+                    break
+            cpc_set.add(cpc_split)
+        cls_map[key] = list(cpc_set)
+    return cls_map
+
+def buildClsMap():
+    download_set = set(listFiles('txt', suffix='txt'))
+    cur_cls_map = np.load('ClsMap.npy', allow_pickle=True).flat[0] # .flat[0] make sure it's dict
+    # 增加未处理过的专利
+    download_set = download_set - set(cur_cls_map.keys())
     # download_set = ["CA2809992A1", "US20040230751A1"]
     pool = ThreadPool()
     tuples = pool.map(parseClassifications, download_set)
     pool.close()
     pool.join()
     cls_dic = dict(tuples)
-    print(cls_dic)
-    np.save('ClsMap.npy', cls_dic)
+    for key, value in cls_dic.items():
+        cur_cls_map[key] = value
+        
+    np.save('ClsMap.npy', cur_cls_map)
 
 def loadCitationDic():
     cite_map = np.load('CiteMap.npy', allow_pickle=True).flat[0]
@@ -107,19 +139,40 @@ def buildCitationDic():
     print(cite_dic)
     np.save('CiteMap.npy', cite_dic)
 
+def loadAddOnPatent():
+    rpcs = listFiles('add_on_csv', 'csv')
+
+    rpc_dic = { }
+    for rpc in rpcs:
+        rows = pd.read_csv('add_on_csv' + '/' + rpc + '.csv', header=None).values.tolist()
+        for row in rows:
+            # 去调Patent号中的横杠
+            strs = row[0].split('-')
+            # 修正可能存在的错误
+            if strs[1].isdigit() and int(strs[1][0:4]) in range(1900, 2100):
+                l = list(strs[1])
+                l.insert(4, '0')
+                strs[1] = ''.join(l)
+            patent = ''.join(strs)
+            # patent = row[0].replace('-', '')
+            rpc_dic[patent] = rpc
+        
+    return rpc_dic
+
+    
 def loadRPCDict():
-    arm_rpc_patents = pd.read_csv("arm_rpc.csv").values.tolist()
-    mips_rpc_patents = pd.read_csv("mips_rpc.csv").values.tolist()
+    arm_rpc_patents = pd.read_csv("arm_rpc.csv", header=None).values.tolist()
+    mips_rpc_patents = pd.read_csv("mips_rpc.csv", header=None).values.tolist()
     rpc_patents = arm_rpc_patents + mips_rpc_patents
     rpc_dic = dict()
     for row in rpc_patents:
         rpc_dic[row[0]] = row[1]
     return rpc_dic
 
-def buildClsMap():
-    rpc_dic = loadRPC()
+def buildClsDic():
+    rpc_dic = loadRPCDict()
     cite_dic = loadCitationDic()
-    cls_dic = loadClsDic()
+    cls_dic = loadClsMap()
     inner_set = set(rpc_dic.keys()) & set(cite_dic.keys())
     res = {}
     for patent in inner_set:
@@ -171,21 +224,28 @@ def process():
     cls_map = buildClsMap()
     drawHeatGraph(cls_map)
 
-def getHtml():
-    patent_list = loadRPCDict().keys()
+def getHtml(rpc_patent_dic, down_dependency: bool):
+    
+    # 要下载的专利列表
+    patent_list = rpc_patent_dic.keys()
     # patent_list = pd.read_csv(file).values.tolist()
     # patent_list = [row[0] for row in patent_list]
     patent_set = set(patent_list)
-    download_set = set(listPatents('txt'))
+    
+    # 已经下载过的专利文件
+    download_set = set(listFiles('txt', 'txt'))
+    
+    # 下载列表是
     download_list = list(patent_set - download_set)
-    for patent in download_list:
-        if patent in download_set:
-            html = readLines("txt/" + patent + ".txt")
-        else:
-            html = downloadPatentHtml(patent)
-            download_set.add(patent)
-            print('download of ' + patent + ' end.')
-        getDependencyHtml(patent, download_set)
+    
+    parallelMap(downloadPatentHtml, download_list)
+    # for patent in download_list:
+    #     # 下载专利文本 更新已下载集合
+    #     downloadPatentHtml(patent)
+    #     download_set.add(patent)
+    #     # 是否下载citation中的专利
+    #     if down_dependency:
+    #         getDependencyHtml(patent, download_set)
 
 def getDependencyHtml(patent, download_set):
     (patent, citations) = parseCitations(patent)
@@ -216,10 +276,13 @@ def getPdf():
         df = pd.DataFrame(patent_list)
         df.to_csv(file, index=False, header=False)
 
-def listPatents(path):
+def listFiles(path, suffix):
     patents = os.listdir(path)
-    num_list = [patent.split('.')[0] for patent in patents if patent.split('.')[1] == 'txt']
+    num_list = [patent.split('.')[0] for patent in patents if patent.split('.')[1] == suffix]
     return num_list
+
+def removeFile(path, name, suffix):
+    os.remove(path + '/' + name + '.' + suffix)
 
 def write2txt(text, file):
     with open(file, 'w') as f:
@@ -233,7 +296,9 @@ def readLines(file):
 if __name__ == "__main__":
     url = 'https://patents.google.com/patent/US7107551B1/en'
     # write2txt(getText(url), 'html1.txt')
-    getHtml()
+    # print(downloadPatentHtml('US20130292297A1'))
+    getHtml(loadRPCDict(), False)
+    # loadAddOnPatent()
     # buildClsMap()
     # loadClsMap()
     # buildCitationMap()
