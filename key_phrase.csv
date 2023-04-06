@@ -1,0 +1,417 @@
+R01A01,"instruction fetch, instruction prefetch",instruction fetch stage," Instruction cache,Branch prediction,Program counter, Pipeline stage,Instruction buffer, Address generation, Speculative execution, Multi-threading
+,Trace cache, Instruction alignment"
+R01A02,branch prediction,"conditional move instruction, branch delay slot, branch prediction buffer, branch history table, dynamic branch prediction, branch target buffer, correlating predictor, tournament branch prediction","Branch target prediction, Branch history table, Program counter prediction, Two-level branch predictor, Global history buffer, Branch direction predictor, Pattern history table, Correlation-based predictor, Hybrid branch predictor, Adaptive branch prediction"
+R01A03,"decoding instruction, pre-decoding instruction, instruction decode",,"Instruction set architecture, Operand forwarding,  Control hazard detection,  Register renaming, Micro-operations cache, Instruction alignmen,  Static branch prediction, Disambiguation logic, Instruction queue, Operand cache"
+R01A04,register renaming,"structural hazard, data hazard, pipeline data hazard, load-use data hazard, pipeline stall, control hazard, branch hazard, stall, delayed decision, delayed branch, predict"," Data forwarding, Instruction reordering,  Pipeline stalling,  Out-of-order execution, Speculative execution
+,Scoreboarding
+, Tomasulo algorithm, Register renaming
+, Load/store queue
+, Reorder buffer
+"
+R01A05,"instruction dispatch, dispatch scheduler, round-robin method","instruction dispatch, dispatch scheduler","Instruction window
+, Micro-operation queue
+, Retirement register file
+, Instruction grouping
+, Dispatch logic
+,  Instruction cache
+, Pipeline stage
+,  Execution unit
+, Reservation station
+,  Out-of-order execution"
+R01A06,"instruction issuing, instruction scheduling, pipeline scheduling","instruction issuing, instruction scheduling","Instruction scheduling
+, Scoreboarding
+, Reservation station
+, Dispatch unit
+, Register renaming
+, Out-of-order execution
+, Instruction cache
+,  Speculative execution
+, Operand forwarding
+, Operand cache"
+R01A07,"arithmetic instruction, logical instruction; Adding, Subtraction, Multiplying, Dividing","arithmetic logic unit, ALU","Execution unit
+, Arithmetic logic unit
+, Floating-point unit
+, Multimedia extension unit
+,  Vector processing unit
+,  Shifter unit
+,  Barrel shifter
+, Bitwise logic unit
+, Branch execution unit
+, Memory management unit
+"
+R01A08,"bypass, data hazard, pipeline latency","forwarding logic, pipeline latency "," Interconnect fabric
+, Data forwarding path
+, Load/store forwarding
+, Operand bypassing
+, Out-of-order execution
+,  Speculative execution
+,  Reorder buffer
+, Scoreboarding
+, Execution unit
+,  Pipeline interlock"
+R01A09,"out-of-order, re-order",,"Instruction retirement
+, Reorder buffer
+, Instruction commit
+, Commit unit
+, Register renaming
+,  Pipeline interlock
+, Memory consistency model
+, Speculative execution
+, Checkpointing mechanism
+,  Fault tolerance"
+R01A10,"memory address translation, virtual memory address, physical memory address, page table, TLB",,"Virtual memory system,  Page table walk
+, Translation lookaside buffer
+, Address translation caching
+,  Memory protection mechanism
+, Memory segmentation
+, TLB miss handling
+,  Page fault handling
+, Memory protection key
+, Page table entry cache
+"
+R01A11,"load unit, load queue, store unit, store queue, store buffer",,"Memory access unit
+, Data cache access
+, Address generation unit
+, Memory order buffer
+, Memory consistency model
+, Memory dependence prediction
+, Memory coalescing
+, Load-to-use latency
+, Memory barrier instruction
+,  Memory access contention"
+R01A12,"roll back, snapshot, error recovery, restarting pipeline, branch miss-prediction",,"Exception recovery
+, Pipeline recovery
+,  Rollback mechanism
+, Error correction code
+, Checkpointing mechanism
+, Speculative execution
+, Error detection circuit
+,  Instruction retry
+,  Fault tolerance
+,  Redundancy mechanism
+"
+R01A13,"exception handling, program instruction",,"Interrupt handling
+, Fault handling
+, Exception recovery
+, Exception dispatch
+, Exception stack
+, Exception vector
+,  Exception mask
+, Exception handler
+, Program counter adjustment
+,  Exception cause register
+"
+R01A14,"interrupt handling, interrupt controller",," Interrupt controller
+,  Interrupt service routine
+, Interrupt prioritization
+, Interrupt masking
+, Interrupt dispatching
+,  Interrupt request (IRQ)
+,  Interrupt vector table
+,  Nested interrupt handling
+, Interrupt latency
+, Interrupt processing pipeline"
+R01A15,"register file, register bank, banked register, distributed register","in behavioral verilog, register file, ","General-purpose register file
+, Special-purpose register file
+, Vector register file
+, Floating-point register file
+,  Multi-port register file
+, Shadow register file
+, Banked register file
+, Register renaming scheme
+, Register file access timing
+,  Register file coalescing"
+R01B01,"cache coherence, cache coherency, bus snooping, bus sniffing, directory-based cache, snoopy protocols, snoop filter, data uniformity, simultaneous storing","cache consistency, cache enforcement schemes, cache implement techniques, cache migration, cache problem, cache protocol example, cache protocols, cache replication, cache snooping protocol, cache snoopy, cache statediagram, write invalidate protocol","Cache coherence
+,  Coherent interconnect
+,  Coherence protocol
+,  Directory-based coherence
+, Snooping-based coherence
+,  Coherent shared memory
+,  Coherent I/O transactions
+, Incoherent access detection
+, Coherent memory transactions
+,  Coherence miss handling
+"
+R01B02,,atomicimplementing,", Atomic instruction
+, Atomic memory access
+, Atomic transactional memory
+,  Atomic compare-and-swap 
+, Atomic fetch-and-add 
+, Atomic swap operation
+,  Multi-core atomicity
+,  Strong atomicity
+, Weak atomicity
+, Non-blocking atomic operation"
+R01B03,catch prefetch,"Prefetching,DRAM(?), software prefetching, memory affinity","Hardware prefetching
+,  Prefetch buffer
+, Prefetching algorithm
+, Adaptive prefetching
+, Sequential prefetching
+, Stream prefetching
+,  Prefetching data cache
+, Prefetching instruction cache
+,  Prefetch accuracy
+,  Prefetching based on access patterns"
+R01B04,"polling(?), non-blocking cache",nonblocking cache," Non-blocking cache access, Non-blocking memory access
+, Non-blocking synchronization
+, Non-blocking load/store unit
+, Non-blocking communication
+, Non-blocking interconnect
+, Non-blocking arbitration
+, Non-blocking contention resolution
+, Non-blocking atomic operation
+,  Non-blocking pipeline"
+R01B05,"banked cache, multibanked cache, partitioned cache",,"Banked cache architecture
+, Banked cache organization
+, Banked cache memory
+, Banked memory system
+, Multi-banked cache
+, Multi-banked memory
+, Banked access to cache
+, Bank selection for cache
+, Bank conflict resolution
+, Banking scheme for cache"
+R01B06,"cache prediction, way prediction",,"branch history table
+, cache replacement policy
+, conditional branch target
+, data access pattern
+, history buffer table
+, instruction fetch unit
+, instruction history table
+, local branch history
+, loop branch predictor
+, stride prediction table"
+R01B07,"write through, write back, copy back","write allocate, write buffer, write-back",", Write hit policy
+, Write miss policy
+, Write allocate policy
+, Write through policy
+, Write back policy
+, Write merging policy
+, Write combining policy
+, Write invalidation policy
+, Write buffer policy
+,  Write coalescing policy"
+R01B08,"cache replacement, cache eviction",,",  Block replacement policy
+, Dynamic replacement policy
+,  Associative replacement policy
+,  Random replacement policy
+, Hybrid replacement policy
+, Set-associative replacement policy
+, Parallel replacement policy
+, Adaptable replacement policy
+, Markov replacement policy
+, Cost-sensitive replacement policy"
+R01B09,"error detection, error correcting ","error detection code, error correction code, error detecting and correcting code, error correction",",  Error correction code
+,  Checksum calculation
+,  Fault tolerance mechanism
+,  Error correction technique
+,  Redundancy-based approach
+, Data validation circuitry
+, Bit error correction
+,  Parity check circuit
+, Error checking mechanism
+, Data integrity control"
+R01C01,"vector processor, SIMD processor","data vector, SIMD extensions, SIMD for loops, massively parrallel multiprocessors, small-scale, vector architecture",",  Vector processing unit
+, SIMD instructions
+, Vector register file
+, SIMD data path
+, Vector ALU
+, SIMD data processing
+,  Vectorization support
+, SIMD data operations
+, Vector memory access
+, SIMD-enabled processor"
+R01C02,"accelerator, neutral network",,", Neural network accelerator
+,  AI hardware accelerator
+, Neural engine chip
+, AI computing chip
+, Deep learning processor
+, Neural network unit
+, AI inference engine
+, Neural processing unit
+,  AI computing unit
+, Neural network chip"
+R01C03,"graphics processing unit, GPU, graphics processor, computer graphics system","GPU visual application, GPU heterogeneous, graphics logical pipeline, graphics processing units, graphics logical pipeline,",", Graphics Processing Unit
+, Parallel Processing Unit
+, Compute Accelerator Unit
+, Shader Processing Unit
+, Video Processing Unit
+, Programmable Graphics Pipeline
+, Multi-Core Processor
+, GPU Technology
+, Pixel Processing Unit
+,  Vertex Processing Unit"
+R01C04,matrix encoder ,,
+R01D01,"packet router, message router",,", Packet routing algorithm
+, Network on-chip
+, Virtual router architecture
+, Topology discovery mechanism
+,  Congestion control mechanism
+, Routing table lookup
+, Link state routing
+, Dynamic routing protocol
+, Quality of service
+, Multicast routing algorithm
+
+"
+R01D02,"routing topology, loop-free(?)","network topologies, network implementing, multistage, operating system",", Network hierarchy
+, Routing schemes
+,  Link allocation
+,  Path selection
+,  Data transmission
+, Connection mapping
+, Routing efficiency
+, Network congestion
+, Interconnect mapping
+, Communication topology"
+R01D03,"flow control, congestion control(?)",,", Packet flow control
+, Link congestion management
+,  Interconnect arbitration scheme
+, Path bandwidth allocation
+, Traffic flow regulation
+, Communication congestion avoidance
+, Network load balancing
+,  Interconnect buffer management
+, Flow-based routing
+, Bandwidth allocation control"
+R01D04,"Interconnect protocol, Internet protocol(?)",,",  Data transfer protocol
+, Communication scheme
+, Packet transmission method
+,  Network interface protocol
+,  Message exchange mechanism
+,  Link layer protocol
+, Intercommunication standard
+, Bus arbitration protocol
+, Data exchange format
+, Transmission control method
+"
+R01E01,"superscalar processor, superscalar microprocessor","dynamic pipeline scheduling, multithreading options",", Dynamic Instruction Dispatch
+, Execution Pipeline Optimization
+, Out-of-Order Execution
+, Parallel Processing Unit
+, Speculative Execution Techniques
+, Superscalar Architecture Design
+, Multiple Functional Units
+, Simultaneous Instruction Execution
+, Vector Instruction Processing
+, Hybrid Processor Architecture"
+R01E02,"simultaneous multithreading, multi-threaded processor, hardware multithreading(?)",,", Parallel Processing Unit
+, Thread Management Unit
+, Processor Architecture Technology
+,  Instruction Level Parallelism
+, Hardware Multi-Threading
+, Resource Sharing Technology
+,  Multi-Thread Execution
+, Dynamic Resource Allocation
+, Multiple Logical Processors
+, Concurrent Thread Execution"
+R01E03,"symmetric multiprocessing, shared-memory multiprocessing",,", Cache coherency protocol
+, Shared memory architecture
+, Thread-level parallelism
+, Multi-core processor
+, Parallel processing unit
+, System bus interconnect
+, Task scheduling algorithm
+, Symmetric multiprocessing
+, Core affinity mapping
+, Processor affinity mask
+"
+R01F01,"chip validation, chip verification, design verification",,",  Validation flow control
+, Debugging interface circuit
+, Verification methodology flow
+, Debugging control logic
+, Emulation probe circuit
+, Validation signal generator
+,  Debugging trigger circuit
+,  Verification test bench
+, Emulation mode selection
+, Validation status register"
+R01F02,"debug apparatus, debug interface(?)",,", Code analysis tool
+,  Trace capture tool
+, Error detection tool
+, Performance analyzer tool
+, Diagnostic tool
+, Code profiler tool
+, Fault isolation tool
+,  Runtime analysis tool
+, Tracing tool
+, Code inspector tool"
+,"chip security, micro-architecture security, security checking",,", Side channel attacks
+,  Hardware security features
+,  Memory protection mechanisms
+,  Secure boot process
+, Attack detection methods
+, Branch prediction security
+, Trusted execution environments
+, Register file security
+, Code obfuscation technique, Security-aware microarchitecture"
+R02A01,,"arithmetic instructions, add operation, subtract operation, multiplication operation,  division operation,logical, operands, arithmetic intensity, arithmetic logic unit","Math computation unit
+,  Numeric operation decoder
+, ALU operation control
+, Integer calculation engine
+, Floating-point processing module
+, Data arithmetic pipeline
+, Operation opcode handling
+, Instruction execution engine
+, Arithmetic logic pipeline
+, Computation data path
+"
+R02A02,,"logical instruction, boolean instruction, logical operation, bitwise operation(?)",
+R02A03,,"shift instruction, shift operation instruction, shift logical operation, shift arithmetic operation",
+R02A04,,"conditional execution instruction, condition attribute, condition flag",
+R02B01,,"jump instruction, branch instruction,
+jump table, jump address table, jump register, retrun address, caller, callee, instruction address register, program counter, ",
+R02C01,,"load instruction, store instruction, load and store instruction, load/store instruction",
+R02D01,,"load/store operation, load and store operation, floating-point value, floating-point number",
+R02D02,,"computing operation, floating-point value, floating-point number",
+R02D03,,"conversion operation, move operation, conversion and move operation, floating-point value, floating-point number",
+R02D04,,"comparison operation, floating-point value, floating-point number",
+R02D05,,"classify operation, floating-point value, floating-point number",
+R02E01,,"memory ordering, memory ordering operation, memory ordering instruction, FENCE instruction",
+R02F01,,"environment call, breakpoint instruction, breakpoint exception, breakpoint trap",
+R02G01,,"Hint instruction, HINT encoding, performance hints",
+R02H01,,"atomic instruction, atomic memory operation",
+R02H02,,"load reserved, store conditional instruction, lock-free data structures",
+R02I01,,CSR instruction,
+R02J01,,compressed instruction,
+R02K01,,"bit manipulation, bit permutation, byte permutation, bit extraction, bit insertion, instruction",
+R02L01,,"language translation, ISA translation, instruction",
+R02M01,,"transactional memory, instruction, buffer",
+R02N01,,"Packed-SIMD, SIMD operation, instruction",
+R02O01,,vector instruction,
+R02P01,,debug instruction,
+R02Q01,,"environment call, breakpoint instruction, breakpoint exception, breakpoint trap, privilege mode",
+R02Q02,,"trap return, exception return, interrupt return, instruction",
+R02Q03,,"WFI instruction, interrupt management",
+R02Q04,,"custom defined, system instruction",
+R02Q05,,"supervisor instruction, memory management, fence instruction",
+R02Q06,,"hypervisor instruction, memory management, fence instruction, hypervisor virtual-machine",
+R02Q07,,"exception instruction, trap instruction, exception handling vector, trap exception",
+R03A01,,"scheduler, resource assigning, resource allocation, task assigning, task allocation, concurrent instruction execution, operating system",
+R03A02,,"memory management, memory allocation, operating system",
+R03A03,,"security, high-level security, low-level security, operating system",
+R03A04,,"data access, file system, directory tree, operating system",
+R03B01,,"hypervisor, emulator, host machine, guest machine, virtual machine",
+R03B02,,"containers, virtual private servers, virtual environments, virtual kernels, multiple instances, isolated user space, virtualization",
+R04A01,,"clock domain crossing, clock domain, clock crossing, CDC",
+R04B01,,"power management, integrated circuits, ICs, PMICs, PMU",
+R04B02,,"voltage scaling, overvolting, undervolting, increase voltage, decrease voltage",
+R04B03,,"multiple power domains, multi-power domains",
+R04B04,,"multiple voltage domains, multi-voltage domains",
+R05A01,,"silicon substrate, silicon slice, silicon wafer, semiconductor device, semiconductor material, integrated circuits, electronic circuit",
+R05B01,,"diodes, semiconductor device, semiconductor material, integrated circuits, electronic circuit",
+R05B02,,"capacitors, semiconductor device, semiconductor material, integrated circuits, electronic circuit",
+R05B03,,"transistors, semiconductor device, semiconductor material, integrated circuits, electronic circuit",
+R05B04,,"MOS transistor, metal–oxide–silicon transistor, MOSFET, MOS-FET, MOS FET",
+R06A01,,"wafer cleaning, substrate cleaning",
+R06A02,,"passivation, semiconductor fabrication, IC fabrication",
+R06A03,,"photolithography, optical lithography, semiconductor fabrication, IC fabrication",
+R06A04,,"Ion implantation, semiconductor fabrication, IC fabrication",
+R06A05,,"etching, semiconductor fabrication, IC fabrication",
+R06A06,,"thermal oxidation, semiconductor fabrication, IC fabrication",
+R06A07,,"thin-film deposition, semiconductor fabrication, IC fabrication",
+R06A08,,"electroplating, semiconductor fabrication, IC fabrication",
+R06B01,,"wafer testing, silicon wafer, semiconductor fabrication, IC fabrication",
+R06B02,,"IC testing, chip testing, semiconductor fabrication, IC fabrication",
+R06B03,,"test fixture, semiconductor fabrication, IC fabrication",
+R06B04,,,
