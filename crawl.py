@@ -111,11 +111,13 @@ def distinctClsMap(cls_map):
         cls_map[key] = list(cpc_set)
     return cls_map
 
-def buildClsMap():
+def buildClsMap(incremental=True):
     download_set = set(listFiles('txt', suffix='txt'))
-    cur_cls_map = np.load('ClsMap.npy', allow_pickle=True).flat[0] # .flat[0] make sure it's dict
-    # 增加未处理过的专利
-    download_set = download_set - set(cur_cls_map.keys())
+    if incremental:
+        # 仅处理未处理过的专利
+        cur_cls_map = np.load('ClsMap.npy', allow_pickle=True).flat[0] # .flat[0] make sure it's dict
+        download_set = download_set - set(cur_cls_map.keys())
+        
     # download_set = ["CA2809992A1", "US20040230751A1"]
     pool = ThreadPool()
     tuples = pool.map(parseClassifications, download_set)
@@ -298,9 +300,9 @@ if __name__ == "__main__":
     url = 'https://patents.google.com/patent/US7107551B1/en'
     # write2txt(getText(url), 'html1.txt')
     # print(downloadPatentHtml('US20130292297A1'))
-    getHtml(loadRPCDict(), False)
+    # getHtml(loadRPCDict(), False)
     # loadAddOnPatent()
-    # buildClsMap()
+    buildClsMap()
     # loadClsMap()
     # buildCitationMap()
     # loadCitationMap()
