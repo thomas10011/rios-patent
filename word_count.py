@@ -346,7 +346,7 @@ def statisticWordFreqInAll(words_list):
     # np.save('book_gloss_undergrad_patent_word_freq.npy', patent_word_freq_dic)
     
 
-def drawWordFreqAllGraph():
+def drawWordFreqAllGraph(word_src_dic):
     
     # file_name = 'arm_gloss_word_freq.npy'
     file_name = 'book_gloss_undergrad_word_freq.npy'
@@ -372,7 +372,7 @@ def drawWordFreqAllGraph():
     
     start = 0
     while start < len(dataset):
-        draw8GridGraph(dataset[start:start+8], 'Arm Datasheet & Book Glossary(Undergraduate), Top-25')
+        draw8GridGraph(dataset[start:start+8], 'Arm Datasheet & Book Glossary(Undergraduate), Top-25', word_src_dic)
         start += 8
     return dataset
     
@@ -437,7 +437,7 @@ def topKwords(word_count, k):
 rpc_name_dic = loadRPCNameDict()
 
 # 根据传入的数据画图
-def draw8GridGraph(dataset, title):
+def draw8GridGraph(dataset, title, word_src_dic):
     n = 2
     m = 4
     
@@ -455,7 +455,12 @@ def draw8GridGraph(dataset, title):
             
             x, y = topKwords(word_count, 25)
             
-            axes[i, j].bar(x, y)
+            x_labeled = []
+            for label in x:
+                x_labeled.append(label + '(' + word_src_dic[label] + ')')
+            
+            print(x_labeled)
+            axes[i, j].bar(x_labeled, y)
             name = ''
             if rpc_class in rpc_name_dic.keys():
                 name = '(' + rpc_name_dic[rpc_class] + ')'
@@ -722,9 +727,19 @@ if __name__ == "__main__":
     # statisticWordCombination()
     
     # print(len(loadBookWords()))
-    # words_list_book = loadBookWords()
-    # words_list_arm = load_csv_single_cloumn('arm_gloss.csv')
-    # words_list = list(set(words_list_arm + words_list_book))
-    # statisticWordFreqInAll(words_list)
+    words_set_book = set(loadBookWords())
+    words_set_arm = set(load_csv_single_cloumn('arm_gloss.csv'))
+    words_list = list(words_set_arm | words_set_book)
     
-    drawWordFreqAllGraph()
+    word_dic = { }
+    for word in words_list:
+        if word in words_set_arm and word in words_set_book:
+            word_dic[word] = 'BOTH'
+        elif word in words_set_arm:
+            word_dic[word] = 'arm'
+        else:
+            word_dic[word] = 'book'
+    
+    statisticWordFreqInAll(words_list)
+    
+    # drawWordFreqAllGraph(word_dic)

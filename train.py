@@ -610,23 +610,21 @@ def statisticWordFrequency():
 
 def loadBookWords():
     word_list = []
-    with open('book_gloss_undergrad.txt', encoding='utf-8') as file:
+    with open('book_part_1.txt', encoding='utf-8') as file:
         for line in file.readlines():
             line = line.strip('\n').strip(',').strip()
-            words = line.split(',')
-            for word in words:
-                word_list.append(word.strip())
-
-    # with open('book_part_1.txt', encoding='utf-8') as file:
-    #     for line in file.readlines():
-    #         line = line.strip('\n').strip(',').strip()
-    #         word_list.append(line)
+            word_list.append(line)
+            
+    with open('book_part_1.txt', encoding='utf-8') as file:
+        for line in file.readlines():
+            line = line.strip('\n').strip(',').strip()
+            word_list.append(line)
         
-    # with open('book_part_2.txt', encoding='utf-8') as file:
-    #     word_list = []
-    #     for line in file.readlines():
-    #         line = line.strip('\n').strip(',').strip()
-    #         word_list.append(line)
+    with open('book_part_2.txt', encoding='utf-8') as file:
+        word_list = []
+        for line in file.readlines():
+            line = line.strip('\n').strip(',').strip()
+            word_list.append(line)
 
     return word_list
 
@@ -682,25 +680,20 @@ def statisticWordFreqInAll(words_list):
     print(rpc_word_freq_dic)
     
     
-    np.save('book_gloss_undergrad_word_freq.npy', rpc_word_freq_dic)
+    np.save('arm_gloss_word_freq.npy', rpc_word_freq_dic)
     
 
 def drawWordFreqAllGraph():
     
-    # file_name = 'arm_gloss_word_freq.npy'
-    file_name = 'book_gloss_undergrad_word_freq.npy'
+    file_name = 'arm_gloss_word_freq.npy'
     
     word_freq_dic = np.load(file_name, allow_pickle=True)[()]
     print(word_freq_dic.keys())
-    
-    word_freq_dic.pop('R01F00')
-    word_freq_dic.pop('R01G00')
-
 
     #根据RPC的字典序排序
     sorted_word_freq_dic = sorted(word_freq_dic.items(), key=lambda x : x[0], reverse=False)
 
-    filter_words = ['read', 'write', 'modify', 'nit', 'AND', 'OR', 'NOT', 'NOR']
+    filter_words = ['read', 'write', 'modify', 'nit']
     
     # 筛掉为词频为0的类别
     dataset = []
@@ -711,7 +704,7 @@ def drawWordFreqAllGraph():
     
     start = 0
     while start < len(dataset):
-        draw8GridGraph(dataset[start:start+8], 'Book Glossary(Undergraduate), Top-20')
+        draw8GridGraph(dataset[start:start+8], 'Arm Glossary, Top-15')
         start += 8
     return dataset
     
@@ -777,9 +770,6 @@ def topKwords(word_count, k):
     
     return x, y
 
-
-rpc_name_dic = loadRPCNameDict()
-
 # 根据传入的数据画图
 def draw8GridGraph(dataset, title):
     n = 2
@@ -795,15 +785,10 @@ def draw8GridGraph(dataset, title):
             if idx >= len(dataset): break
 
             (rpc_class, word_count) = dataset[idx]
-            
-            
-            x, y = topKwords(word_count, 20)
+            x, y = topKwords(word_count, 15)
             
             axes[i, j].bar(x, y)
-            name = ''
-            if rpc_class in rpc_name_dic.keys():
-                name = '(' + rpc_name_dic[rpc_class] + ')'
-            axes[i, j].set_title(rpc_class + name)
+            axes[i, j].set_title(rpc_class)
             # Rotate the x-axis label
             axes[i, j].tick_params(axis="x", labelrotation=90)
 
@@ -1233,12 +1218,12 @@ if __name__ == "__main__":
 
     # statisticWordCombination()
     
-    # print(len(loadBookWords()))
-    # words_list = loadBookWords()
-    # words_list = load_csv_single_cloumn('arm_gloss.csv')
-    # statisticWordFreqInAll(words_list)
+    print(len(loadBookWords()))
+    words_list = loadBookWords()
+    words_list = load_csv_single_cloumn('arm_gloss.csv')
+    statisticWordFreqInAll(words_list)
     
-    drawWordFreqAllGraph()
+    # drawWordFreqAllGraph()
     
     if bin2int(int2bin(89, 90)) != 89:
         print('test failed')
