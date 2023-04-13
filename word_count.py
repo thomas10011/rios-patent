@@ -1,4 +1,4 @@
-from crawl import loadRPCDict, readLines, loadClsMap, distinctClsMap, write2txt, parallelMap, loadAddOnPatent, removeFile
+from crawl import loadRPCDict, readLines, loadClsMap, distinctClsMap, write2txt, parallelMap, loadAddOnPatent, removeFile, listFiles, readText
 from train import filterStop
 from bs4 import BeautifulSoup
 from multiprocessing.dummy import Pool as ThreadPool
@@ -47,7 +47,7 @@ def extractAbstAndDescParallel(patents):
 
 def extractAbstAndDesc(patent):
     # print(patent)
-    html = readLines("txt/" + patent + ".txt")
+    html = readText("txt/" + patent + ".txt")
     (abst, desc) = parseAbstractAndDescription(html)
     if abst is None:
         print('patent:', patent, 'has none abst')
@@ -73,6 +73,15 @@ def filterRPC(rpc_dic, *prefixs):
             
     return result
 
+# 根据列表过滤RPC
+def filterRPCByList(rpc_dic, prefixs):
+    result = dict()
+    for key, value in rpc_dic.items():
+        for prefix in prefixs: 
+            if value.startswith(prefix):
+                result[key] = value
+                break
+    return result
 
 # 所有的RPC分类号只分到第二个Level
 def decreaseRPClevel(rpc_dic):
@@ -306,7 +315,270 @@ def statisticWordFreqInPatent(tuple):
     print('.', end='', flush=True)
     return (patent, words_freq_dic)
 
+def loadCommAppearWords():
+    rpc_class_list = listFiles('comm_appear', 'txt')
     
+    result = []
+    for rpc_class in rpc_class_list:
+        lines = readLines('comm_appear/' + rpc_class + '.txt')
+        print(lines)
+        phrases_list = []
+        for line in lines:
+            
+            phrases = line.split(',')
+            tmp = []
+            for phrase in phrases:
+                tmp.append(phrase.strip())
+                
+            phrases_list.append(tmp)
+
+        result.append((rpc_class, phrases_list))
+    
+    return result
+        
+def loadStuCommAppearWords():
+    result = []
+
+    lines = readLines('appear_freq/R01D.txt')
+    print(lines)
+    phrases_list = []
+    for line in lines:
+        
+        phrases = line.split(',')
+        tmp = []
+        for phrase in phrases:
+            tmp.append(phrase.strip())
+            
+        phrases_list.append(tmp)
+
+    result.append(('R01D', phrases_list))
+    
+    return result
+        
+def list2str(phrases_list):
+    return ', '.join(phrases_list)
+    
+    
+def statisticAppearFreqJob(data_tuple):
+    (rpc_class, phrases_list, patent_text_list) = data_tuple
+    
+    phrases_count_dic = { }
+    
+    print(len(patent_text_list))
+    for (patent, abst, desc) in patent_text_list:
+        text = ' '.join((abst, desc))
+        for phrases in phrases_list:
+            flag = True
+            for phrase in phrases:
+                if phrase not in text:
+                    flag = False
+                    break
+            # 如果列表里的词都出现，更新count
+            if flag:
+                key = list2str(phrases)
+                if key in phrases_count_dic.keys():
+                    phrases_count_dic[key] += 1
+                else:
+                    phrases_count_dic[key] = 1
+
+    return (rpc_class, phrases_count_dic)
+    
+    
+def statisticAppearFreq():
+    
+    rpc_dic = loadRPCDict()
+    
+    # rpc_dic = filterRPC(rpc_dic, 'R01A01')
+    
+    
+    # comm_appear_words_list = loadCommAppearWords()
+    comm_appear_words_list = loadStuCommAppearWords()
+    # comm_appear_words_list = [('R01D', [['bus', 'memory']])]
+    
+    print(comm_appear_words_list)
+    rpc_classes = [rpc_class for (rpc_class, phrases_list) in comm_appear_words_list]
+    
+    
+    rpc_dic = filterRPCByList(rpc_dic, rpc_classes)
+    
+    
+    patents = list(rpc_dic.keys())
+    
+    
+    print(patents)
+    tuples = extractAbstAndDescParallel(patents)
+
+    tmp_dic = { }
+    for (patent, (abst, desc)) in tuples:
+        rpc_class = rpc_dic[patent]
+        if rpc_class in tmp_dic.keys():
+            tmp_dic[rpc_class].append((patent, abst, desc))
+        else:
+            tmp_dic[rpc_class] = [(patent, abst, desc)]
+    
+    data = []
+    for (rpc_class, phrases_list) in comm_appear_words_list:
+        data.append((rpc_class, phrases_list, tmp_dic[rpc_class]))
+    
+    
+    appear_freq_dic_list = parallelMap(statisticAppearFreqJob, data)
+    
+
+    appear_freq_dic = { }
+    for (rpc_class, phrases_count_dic) in appear_freq_dic_list:
+        appear_freq_dic[rpc_class] = phrases_count_dic
+        
+    # print(appear_freq_dic)
+    
+
+    np.save('appear_freq_dic_R01D.npy', appear_freq_dic)
+    
+    
+
+def drawAppearFreqGraph():
+    # file_name = 'arm_gloss_word_freq.npy'
+    file_name = 'appear_freq_dic.npy'
+    
+    appear_freq_dic = np.load(file_name, allow_pickle=True)[()]
+    print(appear_freq_dic.keys())
+    
+
+    rpc_dic = loadRPCDict()
+    # rpc_dic = filterRPC(rpc_dic, 'R01A01')
+    
+
+    rpc_classes = list(appear_freq_dic.keys())
+    
+    rpc_dic = filterRPCByList(rpc_dic, rpc_classes)
+
+    rpc_patent_num_dic = { }
+    for k, v in rpc_dic.items():
+        if v in rpc_patent_num_dic.keys():
+            rpc_patent_num_dic[v] += 1
+        else:
+            rpc_patent_num_dic[v] = 1
+    
+    
+
+    #根据字典序排序
+    sorted_appear_freq_dic = sorted(appear_freq_dic.items(), key=lambda x : x[0], reverse=False)
+
+    
+    # 筛掉为词频为0的类别
+    dataset = []
+    for k, v in sorted_appear_freq_dic:
+        if len(v) == 0: continue
+        dataset.append((k, v))
+    
+    start = 0
+    while start < len(dataset):
+        draw8GridGraphForAppearFreq(dataset[start:start+8], 'Combine Word\'s Appear Frequency', rpc_patent_num_dic)
+        start += 8
+    return dataset
+    
+    
+
+# 根据传入的数据画图
+def draw8GridGraphForAppearFreq(dataset, title, rpc_patent_num_dic):
+    n = 2
+    m = 4
+    
+    fig, axes = plt.subplots(n, m)
+    
+    print('len: ', len(dataset))
+    for i in range(n):
+        for j in range(m):
+            idx = i * m + j
+            
+            if idx >= len(dataset): break
+
+            (rpc_class, word_count) = dataset[idx]
+            
+            
+            x, y = topKwords(word_count, 25)
+            
+            
+            axes[i, j].bar(x, y)
+            name = ''
+            if rpc_class in rpc_name_dic.keys():
+                name = '(' + str(rpc_patent_num_dic[rpc_class]) + ', ' + rpc_name_dic[rpc_class] + ')'
+            axes[i, j].set_title(rpc_class + name)
+            # Rotate the x-axis label
+            axes[i, j].tick_params(axis="x", labelrotation=90)
+
+    plt.suptitle(title)
+    plt.show()
+
+    
+def drawSingleGraphForAppearFreq(): 
+    word_freq_dic = np.load('appear_freq_dic_R01D.npy', allow_pickle=True)[()]
+    # 根据出现的频率排序
+    x = []
+    y = []
+    for rpc_class, freq_dic in word_freq_dic.items():
+        sorted_freq_dic = sorted(freq_dic.items(), key=lambda x : x[1], reverse=True)
+        sorted_freq_dic = sorted_freq_dic[0:120]
+        for word, count in sorted_freq_dic:
+            x.append(word)
+            y.append(count)
+
+    
+    rpc_name_dic = loadRPCNameDict()
+    if rpc_class in rpc_name_dic.keys():
+        name = '(' + rpc_name_dic[rpc_class] + ')'
+        rpc_class += name
+        
+    plt.bar(x, y)
+    plt.title(rpc_class)
+    plt.tick_params(axis="x", labelrotation=90)
+    plt.show()
+    
+
+
+def drawSingleGraph(word_freq_dic): 
+    
+    words_set_book = set(loadBookWords())
+    words_set_arm = set(load_csv_single_cloumn('arm_gloss.csv'))
+    words_list = list(words_set_arm | words_set_book)
+    
+    word_src_dic = { }
+    for word in words_list:
+        if word in words_set_arm and word in words_set_book:
+            word_src_dic[word] = 'BOTH'
+        elif word in words_set_arm:
+            word_src_dic[word] = 'arm'
+        else:
+            word_src_dic[word] = 'book'
+            
+    print(word_freq_dic.keys())
+
+    filter_words = ['read', 'write', 'modify', 'nit', 'AND', 'OR', 'NOT', 'NOR', 'bit']
+    
+    # 根据出现的频率排序
+    x = []
+    y = []
+    for rpc_class, freq_dic in word_freq_dic.items():
+        # 筛掉一些词
+        freq_dic = filterWordFromDic(filter_words, freq_dic)
+        sorted_freq_dic = sorted(freq_dic.items(), key=lambda x : x[1], reverse=True)
+        print(sorted_freq_dic)
+        sorted_freq_dic = sorted_freq_dic[0:100]
+        for word, count in sorted_freq_dic:
+            x.append(word + '(' + word_src_dic[word] + ')')
+            y.append(count)
+
+    
+    rpc_name_dic = loadRPCNameDict()
+    if rpc_class in rpc_name_dic.keys():
+        name = '(' + rpc_name_dic[rpc_class] + ')'
+        rpc_class += name
+        
+    plt.bar(x, y)
+    plt.title(rpc_class + '-top100')
+    plt.tick_params(axis="x", labelrotation=90)
+    plt.show()
+    
+
 
 def statisticWordFreqInAll(words_list):
     
@@ -337,9 +609,10 @@ def statisticWordFreqInAll(words_list):
         patent_word_freq_dic[patent] = words_freq_dic
     
     
-    print(rpc_word_freq_dic)
+
     
-    
+    drawSingleGraph(rpc_word_freq_dic)
+    return 
     np.save('arm_gloss_rpc_word_freq.npy', rpc_word_freq_dic)
     np.save('arm_gloss_patent_word_freq.npy', patent_word_freq_dic)
     # np.save('book_gloss_undergrad_rpc_word_freq.npy', rpc_word_freq_dic)
@@ -740,6 +1013,12 @@ if __name__ == "__main__":
         else:
             word_dic[word] = 'book'
     
-    statisticWordFreqInAll(words_list)
+    # statisticWordFreqInAll(words_list)
     
     # drawWordFreqAllGraph(word_dic)
+    
+    statisticAppearFreq()
+    
+    # drawAppearFreqGraph()
+
+    drawSingleGraphForAppearFreq()

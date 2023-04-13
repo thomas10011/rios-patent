@@ -24,7 +24,9 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleW
            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
            'Accept-Language': 'en-US,en;q=0.5',
            'Accept-Encoding': 'zh-CN,zh;q=0.9,en;q=0.8',
-           'referer': 'https://www.google.com/'
+           'referer': 'https://www.google.com/',
+           'cache-control': 'max-age=0',
+           'x-client-data': 'CLK1yQEIjLbJAQiltskBCMC2yQEIqZ3KAQjxi8sBCJOhywEIhZPNAQiCls0BCOKXzQEI45fNAQjymM0BCOmbzQEIy5zNAQj6nM0BCPuezQEIwJ/NAQjcn80BCIagzQEIlaHNAQ==',
            }
 
 def parallelMap(job, data):
@@ -65,7 +67,7 @@ def parseHtml(html):
     print(cites)
 
 def parseCitations(patent):
-    html = readLines("txt/" + patent + ".txt")
+    html = readText("txt/" + patent + ".txt")
     soup = BeautifulSoup(html, 'html.parser')
     citations = soup.select('tr[itemprop=backwardReferencesOrig]')
     result = []
@@ -76,7 +78,7 @@ def parseCitations(patent):
     return (patent, result)
 
 def parseClassifications(patent):
-    html = readLines("txt/" + patent + ".txt")
+    html = readText("txt/" + patent + ".txt")
     soup = BeautifulSoup(html, 'html.parser')
     ul = soup.select('ul[itemprop=cpcs]')
     res = []
@@ -166,6 +168,7 @@ def loadRPCDict():
     arm_rpc_patents = pd.read_csv("arm_rpc.csv", header=None).values.tolist()
     mips_rpc_patents = pd.read_csv("mips_rpc.csv", header=None).values.tolist()
     rpc_patents = arm_rpc_patents + mips_rpc_patents
+    # rpc_patents = pd.read_csv("R01D.csv", header=None).values.tolist()
     rpc_dic = dict()
     # 人工给的rpc分类表格有问题，只取前6字符，如R01A01
     for row in rpc_patents:
@@ -239,7 +242,8 @@ def getHtml(rpc_patent_dic, down_dependency: bool):
     download_set = set(listFiles('txt', 'txt'))
     
     # 下载列表是
-    download_list = list(patent_set - download_set)
+    # download_list = list(patent_set - download_set)
+    download_list = list(patent_set)
     
     parallelMap(downloadPatentHtml, download_list)
     # for patent in download_list:
@@ -291,18 +295,28 @@ def write2txt(text, file):
     with open(file, 'w') as f:
         f.write(text)
 
-def readLines(file):
+def readText(file):
     with open(file, 'r') as f:
         text = f.read()
         return text
 
+def readLines(file):
+    with open(file, 'r') as f:
+        lines = f.readlines()
+        ret = []
+        for line in lines:
+            s = line.strip('\n')
+            if len(s) == 0: continue
+            ret.append(s)
+        return ret
+        
 if __name__ == "__main__":
     url = 'https://patents.google.com/patent/US7107551B1/en'
     # write2txt(getText(url), 'html1.txt')
-    # print(downloadPatentHtml('US20130292297A1'))
+    print(downloadPatentHtml('US10795854B2'))
     # getHtml(loadRPCDict(), False)
     # loadAddOnPatent()
-    buildClsMap()
+    # buildClsMap()
     # loadClsMap()
     # buildCitationMap()
     # loadCitationMap()
