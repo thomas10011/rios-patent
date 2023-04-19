@@ -315,12 +315,17 @@ def statisticWordFreqInPatent(tuple):
     print('.', end='', flush=True)
     return (patent, words_freq_dic)
 
-def loadCommAppearWords():
-    rpc_class_list = listFiles('comm_appear', 'txt')
+def loadCommAppearWords(dir):
+    # dir = 'comm_appear'
+    # dir = 'comm_appear_filtered'
+
+    rpc_class_list = listFiles(dir, 'txt')
     
     result = []
     for rpc_class in rpc_class_list:
-        lines = readLines('comm_appear/' + rpc_class + '.txt')
+        lines = readLines(dir + '/' + rpc_class + '.txt')
+        # 去重。。。
+        lines = list(set(lines))
         print(lines)
         phrases_list = []
         for line in lines:
@@ -380,19 +385,23 @@ def statisticAppearFreqJob(data_tuple):
                     phrases_count_dic[key] += 1
                 else:
                     phrases_count_dic[key] = 1
+                    
+                if phrases_count_dic[key] > len(patent_text_list):
+                    print('Error! Count great thant sample size!')
 
     return (rpc_class, phrases_count_dic)
     
     
-def statisticAppearFreq():
+def statisticAppearFreq(dir):
+    
     
     rpc_dic = loadRPCDict()
     
     # rpc_dic = filterRPC(rpc_dic, 'R01A01')
     
     
-    # comm_appear_words_list = loadCommAppearWords()
-    comm_appear_words_list = loadStuCommAppearWords()
+    comm_appear_words_list = loadCommAppearWords(dir)
+    # comm_appear_words_list = loadStuCommAppearWords()
     # comm_appear_words_list = [('R01D', [['bus', 'memory']])]
     
     print(comm_appear_words_list)
@@ -431,13 +440,19 @@ def statisticAppearFreq():
     # print(appear_freq_dic)
     
 
-    np.save('appear_freq_dic_R01D.npy', appear_freq_dic)
+    # np.save('appear_freq_dic_R01D.npy', appear_freq_dic)
+    # np.save('appear_freq_dic_R01_filtered.npy', appear_freq_dic)
+    np.save(dir + '.npy', appear_freq_dic)
     
     
 
-def drawAppearFreqGraph():
+def drawAppearFreqGraph(dir):
     # file_name = 'arm_gloss_word_freq.npy'
-    file_name = 'appear_freq_dic.npy'
+    # file_name = 'appear_freq_dic.npy'
+    # file_name = 'appear_freq_dic_R01_filtered.npy'
+    dir = 'comm_appear_lai_3'
+    
+    file_name = dir + '.npy'
     
     appear_freq_dic = np.load(file_name, allow_pickle=True)[()]
     print(appear_freq_dic.keys())
@@ -510,13 +525,19 @@ def draw8GridGraphForAppearFreq(dataset, title, rpc_patent_num_dic):
     plt.show()
 
     
-def drawSingleGraphForAppearFreq(): 
-    word_freq_dic = np.load('appear_freq_dic_R01D.npy', allow_pickle=True)[()]
+def drawSingleGraphForAppearFreq(dir): 
+    # word_freq_dic = np.load('appear_freq_dic_R01D.npy', allow_pickle=True)[()]
+    word_freq_dic = np.load(dir + '.npy', allow_pickle=True)[()]
     # 根据出现的频率排序
     x = []
     y = []
+    
     for rpc_class, freq_dic in word_freq_dic.items():
         sorted_freq_dic = sorted(freq_dic.items(), key=lambda x : x[1], reverse=True)
+        text = ''
+        for tuple in sorted_freq_dic:
+            text += str(tuple) + '\n'
+        write2txt(text, "test.txt")
         sorted_freq_dic = sorted_freq_dic[0:120]
         for word, count in sorted_freq_dic:
             x.append(word)
@@ -1017,8 +1038,9 @@ if __name__ == "__main__":
     
     # drawWordFreqAllGraph(word_dic)
     
-    statisticAppearFreq()
+    dir = 'comm_appear_lai_3'
+    statisticAppearFreq(dir)
     
     # drawAppearFreqGraph()
 
-    drawSingleGraphForAppearFreq()
+    drawSingleGraphForAppearFreq(dir)
