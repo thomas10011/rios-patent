@@ -1,0 +1,134 @@
+R01A01,Fetch Unit / Pre-fetch Unit
+R01A02,Branch Predictor
+R01A03,Decode Unit
+R01A04,Hazard Handling
+R01A05,Dispatch Unit
+R01A06,Issue Unit
+R01A07,Function Unit
+R01A08,Forwarding Network
+R01A09,Retire Unit
+R01A10,MMU
+R01A11,Load/Store Unit
+R01A12,Recovery
+R01A13,Exception Handling
+R01A14,Interrupt Handling
+R01A15,Register Files
+R01B01,Coherence
+R01B02,Atomic operation
+R01B03,Prefetch
+R01B04,Non-Blocking
+R01B05,Banking (Banked Caches)
+R01B06,Predictor (Way prediction)
+R01B07,Write Policy
+R01B08,Replacement Policy
+R01B09,Error Detection & Correction
+R01C01,Vector/SIMD
+R01C02,Neutral Network (AI accelerator)
+R01C03,GPU
+R01C04,matrix encoder
+R01D01,Router
+R01D02,Topology
+R01D03,Flow Control
+R01D04,Protocol
+R01E01,Super Scalar
+R01E02,SMT
+R01E03,SMP
+R01F01,Chip Validation
+R01F02,Debugging tool
+R01G,Security
+R02A01,Arithmetic Operation Instructions
+R02A02,Logical Operation Instructions
+R02A03,Shift Operation Instructions
+R02A04,Conditional Execution Instruction
+R02B01,Jump and Branch instructions
+R02C01,Load/Store instructions
+R02D01,FP Load/Store Instructions
+R02D02,FP Computational Instructions
+R02D03,FP Conversion & Move Instructions
+R02D04,FP Compare Instructions
+R02D05,FP Classify Instructions
+R02E01,Memory Ordering Instructions
+R02F01,Environment Call and Breakpoints Instructions
+R02G01,HINT Instructions
+R02H01,Atomic memory Operation INSTs
+R02H02,Load reserved/store conditional INSTs (for RVWMO)
+R02I01,CSR Instructions
+R02J01,Compressed Instructions
+R02K01,Bit Manipulation Instructions
+R02L01,Language Translated Instructions
+R02M01,Transactional Memory Instructions
+R02N01,Packed-SIMD Instructions
+R02O01,Vector Instructions
+R02P01,Debug Instructions
+R02Q01,Environment Call and Breakpoint Instruction
+R02Q02,Trap-Return Instruction
+R02Q03,Wait for Interrupt Instruction
+R02Q04,Custom SYSTEM Instruction
+R02Q05,Supervisor Instruction
+R02Q06,Hypervisor Instructions
+R02Q07,"Exception Instructions (e.g., Trap Instruction)"
+R03A01,Scheduling & Concurrency
+R03A02,Memory Management
+R03A03,Protection
+R03A04,Storage
+R03B01,Hypervisor
+R03B02,Container
+R04A01,Clock Domain Crossing
+R04B01,Power Management Unit
+R04B02,Dynamic Voltage Scaling
+R04B03,Power Domains
+R04B04,Voltage Domains
+R05A01,Silicon substrate
+R05B01,Diodes
+R05B02,Capacitors
+R05B03,Transistors
+R05B04,MOS
+R06A01,Cleaning
+R06A02,Passivation
+R06A03,Photolithography
+R06A04,Ion Implantation
+R06A05,Etching
+R06A06,Thermal Oxidation
+R06A07,Thin-film Deposition
+R06A08,Electroplating
+R06B01,Wafer Testing
+R06B02,IC Testing
+R06B03,Test Fixture
+R01A,Core
+R01B,Cache
+R01C,Co-processor
+R01D,Interconnect
+R01E,Miscellaneous system
+R01F,Debugger
+R01G,Micro Architecture Security
+R02A,Computational Instructions
+R02B,Control Transfer Instructions
+R02C,Memory Access Instructions (Data Transfer Instrucitons)
+R02D,Float-Point Instructions
+R02E,Memory Ordering Instructions
+R02F,Environment Call and Breakpoints Instructions
+R02G,HINT Instructions
+R02H,Atomic Instructions
+R02I,Control and Status Register(CSR) Instructions
+R02J,Compressed Instructions
+R02K,Bit Manipulation Instructions
+R02L,Language Translated Instructions
+R02M,Transactional Memory Instructions
+R02N,Packed-SIMD Instructions
+R02O,Vector Instructions
+R02P,Debug Instructions
+R02Q,Privileged Instructions
+R03A,Operating System
+R03B,Virtualization
+R04A,Clock
+R04B,Power
+R05A,Physics
+R05B,Device
+R06A,Fabrication
+R06B,Testing
+R01,Micro Architecture
+R02,ISA
+R03,Operating System & Virtualization
+R04,Circuit Design
+R05,Physics & Device
+R06,Fabrication & Testing

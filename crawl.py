@@ -168,7 +168,7 @@ def loadRPCDict():
     # arm_rpc_patents = pd.read_csv("arm_rpc.csv", header=None).values.tolist()
     # mips_rpc_patents = pd.read_csv("mips_rpc.csv", header=None).values.tolist()
     # rpc_patents = arm_rpc_patents + mips_rpc_patents
-    rpc_patents = pd.read_csv("R01D.csv", header=None).values.tolist()
+    rpc_patents = pd.read_csv("stu_classified/R01B01.csv", header=None).values.tolist()
     rpc_dic = dict()
     # 人工给的rpc分类表格有问题，只取前6字符，如R01A01
     for row in rpc_patents:

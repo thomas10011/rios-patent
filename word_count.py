@@ -315,6 +315,27 @@ def statisticWordFreqInPatent(tuple):
     print('.', end='', flush=True)
     return (patent, words_freq_dic)
 
+def laodCommAppearWordsByFile(rpc_class, file):
+
+    result = []
+    lines = readLines(file)
+    # 去重。。。
+    # lines = list(set(lines))
+    print(lines)
+    phrases_list = []
+    for line in lines:
+        phrases = line.split(',')
+        tmp = []
+        for phrase in phrases:
+            tmp.append(phrase.strip())
+            
+        phrases_list.append(tmp)
+
+    result.append((rpc_class, phrases_list))
+    
+    return result
+    
+    
 def loadCommAppearWords(dir):
     # dir = 'comm_appear'
     # dir = 'comm_appear_filtered'
@@ -393,8 +414,6 @@ def statisticAppearFreqJob(data_tuple):
     
     
 def statisticAppearFreq(dir):
-    
-    
     rpc_dic = loadRPCDict()
     
     # rpc_dic = filterRPC(rpc_dic, 'R01A01')
@@ -438,10 +457,10 @@ def statisticAppearFreq(dir):
         appear_freq_dic[rpc_class] = phrases_count_dic
         
     # print(appear_freq_dic)
-    
 
     # np.save('appear_freq_dic_R01D.npy', appear_freq_dic)
     # np.save('appear_freq_dic_R01_filtered.npy', appear_freq_dic)
+    
     np.save(dir + '.npy', appear_freq_dic)
     
     
@@ -526,29 +545,50 @@ def draw8GridGraphForAppearFreq(dataset, title, rpc_patent_num_dic):
 
     
 def drawSingleGraphForAppearFreq(dir): 
+    
     # word_freq_dic = np.load('appear_freq_dic_R01D.npy', allow_pickle=True)[()]
     word_freq_dic = np.load(dir + '.npy', allow_pickle=True)[()]
     # 根据出现的频率排序
     x = []
     y = []
     
+    
+    # 按照文件原本的顺序
+    comm_appear_words_list = laodCommAppearWordsByFile('R01B01', 'sorted_keys.txt')
+    
     for rpc_class, freq_dic in word_freq_dic.items():
-        sorted_freq_dic = sorted(freq_dic.items(), key=lambda x : x[1], reverse=True)
-        text = ''
-        for tuple in sorted_freq_dic:
-            text += str(tuple) + '\n'
-        write2txt(text, "test.txt")
-        sorted_freq_dic = sorted_freq_dic[0:120]
-        for word, count in sorted_freq_dic:
-            x.append(word)
-            y.append(count)
+        print(freq_dic)
+        tuple = comm_appear_words_list[0]
+        for phrases in tuple[1]:
+            key = list2str(phrases)
+            print(key)
+            if key in freq_dic.keys():
+                x.append(key)
+                y.append(freq_dic[key])
 
     
+    # for rpc_class, freq_dic in word_freq_dic.items():
+    #     # sorted_freq_dic = sorted(freq_dic.items(), key=lambda x : x[1], reverse=True)
+    #     sorted_freq_dic = list(freq_dic.items())
+    #     text = ''
+    #     for tuple in sorted_freq_dic:
+    #         text += str(tuple) + '\n'
+    #     write2txt(text, "test.txt")
+    #     sorted_freq_dic = sorted_freq_dic[0:120]
+    #     for word, count in sorted_freq_dic:
+    #         x.append(word)
+    #         y.append(count)
+            
+    #     sorted_keys = [tuple[0] for tuple in sorted_freq_dic]
+    #     write2txt('\n'.join(sorted_keys), "sorted_keys.txt")
+    
+    rpc_class = list(word_freq_dic.keys())[0]
     rpc_name_dic = loadRPCNameDict()
     if rpc_class in rpc_name_dic.keys():
         name = '(' + rpc_name_dic[rpc_class] + ')'
-        rpc_class += name
+        rpc_class += name + ' - specific - stu classified'
         
+
     plt.bar(x, y)
     plt.title(rpc_class)
     plt.tick_params(axis="x", labelrotation=90)
@@ -1008,8 +1048,6 @@ def load_key_phrase(file_name):
 
 if __name__ == "__main__":
 
-
-    
     # statisticOverlap()
     # statisticWordFrequency()
     # loadRPCWordFrequency('R01A01')
